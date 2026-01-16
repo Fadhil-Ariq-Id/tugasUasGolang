@@ -1,33 +1,40 @@
+package graph
 
-package main
+// Edge merepresentasikan koneksi ke node tujuan dengan bobot waktu (menit).
+type Edge struct {
+	To     int
+	Weight int
+}
 
-// array menggunakan slice , stuct untuyk edge atau edge list 
+// Graph direpresentasikan sebagai adjacency list.
 type Graph struct {
-nodes map[int]string
-edges map[int][]int
+	Nodes map[int]string // nodeID -> nama lokasi
+	Edges map[int][]Edge // nodeID -> daftar edge
 }
 
-// new graph => data.go => bangun graph 
 func NewGraph() *Graph {
-return &Graph{
-	nodes: make(map[int]string),
-	edges: make(map[int][]Edge),
-
+	return &Graph{
+		Nodes: make(map[int]string),
+		Edges: make(map[int][]Edge),
+	}
 }
+
+func (g *Graph) AddNode(id int, name string) {
+	g.Nodes[id] = name
+	if _, ok := g.Edges[id]; !ok {
+		g.Edges[id] = []Edge{}
+	}
 }
 
-// add node => data.go => new node for graf 
+// AddEdge menambahkan edge undirected: u->v dan v->u.
+func (g *Graph) AddEdge(u, v, w int) {
+	g.Edges[u] = append(g.Edges[u], Edge{To: v, Weight: w})
+	g.Edges[v] = append(g.Edges[v], Edge{To: u, Weight: w})
+}
 
-func (g * Graph) AddNode(id, name string) {
- g.nodes[id] = name
- if _, ok := g.edges[id]; !ok {
-	g.edges[id] = []Edge{}
-
-} }
-
-//  menambahakan edge bebas 2 arah atau undreited node )
-func (g, *Graph) AddUndirectedEdge(u, v, w int)
-{ 
-g.edges[u] = append(g.edges[u], Edge{to: v, weight: w})
-g.edges[v] = append(g.edges[v], Edge{to: u, weight: w})
+func (g *Graph) NodeName(id int) string {
+	if n, ok := g.Nodes[id]; ok {
+		return n
+	}
+	return "(unknown)"
 }
