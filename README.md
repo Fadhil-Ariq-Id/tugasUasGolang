@@ -2,6 +2,6 @@ run : go run main.go
 
 note :
 ```
-	just a trash folder 
+	temmp_folders just a trash folder 
 	guide to know this inside thhis folder
 ```
