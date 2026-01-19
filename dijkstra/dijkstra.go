@@ -38,12 +38,8 @@ func (pq *PriorityQueue) Pop() any {
 	return item
 }
 
-// Dijkstra:
-// - dist[id]: waktu minimum (menit)
-// - prev[id]: predecessor untuk rekonstruksi rute (prev[source] = -1)
-// - processedNodes: jumlah node yang benar-benar dipop dari PQ
-// - evaluatedEdges: jumlah directed edge yang dievaluasi saat relaksasi
-func Dijkstra(g *graph.Graph, source int, n int) (dist []int, prev []int, processedNodes int, evaluatedEdges int) {
+// Dijkstra calculates the shortest path from source to all other nodes.
+func Dijkstra(g *graph.Graph, source int, n int) (dist []int, prev []int) {
 	dist = make([]int, n)
 	prev = make([]int, n)
 	visited := make([]bool, n)
@@ -64,10 +60,8 @@ func Dijkstra(g *graph.Graph, source int, n int) (dist []int, prev []int, proces
 			continue
 		}
 		visited[u.node] = true
-		processedNodes++
 
 		for _, e := range g.Edges[u.node] {
-			evaluatedEdges++
 			if visited[e.To] {
 				continue
 			}
@@ -79,11 +73,10 @@ func Dijkstra(g *graph.Graph, source int, n int) (dist []int, prev []int, proces
 			}
 		}
 	}
-	return dist, prev, processedNodes, evaluatedEdges
+	return dist, prev
 }
 
-// ReconstructPath mengembalikan urutan node dari source ke target (termasuk keduanya).
-// Jika target tidak terjangkau, mengembalikan nil.
+// ReconstructPath builds the path from source to target.
 func ReconstructPath(prev []int, source, target int) []int {
 	if source == target {
 		return []int{source}
@@ -105,32 +98,9 @@ func ReconstructPath(prev []int, source, target int) []int {
 		return nil
 	}
 
-	// reverse
+	// Reverse path
 	for i, j := 0, len(path)-1; i < j; i, j = i+1, j-1 {
 		path[i], path[j] = path[j], path[i]
 	}
 	return path
-}
-
-// PathBreakdown: bikin breakdown bobot per edge (buat format "a + b + c").
-func PathBreakdown(g *graph.Graph, path []int) (sum int, steps []int) {
-	if len(path) < 2 {
-		return 0, nil
-	}
-	for i := 0; i < len(path)-1; i++ {
-		u, v := path[i], path[i+1]
-		w := edgeWeight(g, u, v)
-		steps = append(steps, w)
-		sum += w
-	}
-	return sum, steps
-}
-
-func edgeWeight(g *graph.Graph, u, v int) int {
-	for _, e := range g.Edges[u] {
-		if e.To == v {
-			return e.Weight
-		}
-	}
-	return math.MaxInt
 }
