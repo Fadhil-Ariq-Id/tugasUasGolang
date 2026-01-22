@@ -2,7 +2,7 @@
 run : go run main.go
 
 kelompok 3 :
-nabhan 
+nabhan dan 
 fadhil ariq
 
 
