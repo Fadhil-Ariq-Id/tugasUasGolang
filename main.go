@@ -40,5 +40,5 @@ func formatPath(g *graph.Graph, path []int) string {
 	for _, id := range path {
 		names = append(names, g.NodeName(id))
 	}
-	return strings.Join(names, " -> ")
+	return strings.Join(names, " --> ")
 }
