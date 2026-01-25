@@ -18,7 +18,7 @@ func main() {
 
 	// 3. Print Results
 	fmt.Printf("%-25s %-15s %s\n", "Tujuan", "Waktu Tempuh", "Rute")
-	fmt.Println(strings.Repeat("-", 60))
+	fmt.Println(strings.Repeat("-", 100))
 
 	for id := 0; id < data.NodeCount; id++ {
 		if id == data.SourceNode {
