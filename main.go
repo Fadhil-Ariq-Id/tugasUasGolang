@@ -10,22 +10,22 @@ import (
 
 func main() {
 	// 1. Build Graph
-	g := data.BuildGraphFromDoc()
+	g := data.DataSample()
 
 	// 2. Run Dijkstra
-	fmt.Printf("Calculating shortest paths from: %s\n\n", g.NodeName(data.SourceNode))
-	dist, prev := dijkstra.Dijkstra(g, data.SourceNode, data.NodeCount)
+	fmt.Printf("Calculating shortest paths from: %s\n\n", g.NodeName(data.SumberNode))
+	dist, prev := dijkstra.Dijkstra(g, data.SumberNode, data.JumlahNode)
 
 	// 3. Print Results
 	fmt.Printf("%-25s %-15s %s\n", "Tujuan", "Waktu Tempuh", "Rute")
 	fmt.Println(strings.Repeat("-", 100))
 
-	for id := 0; id < data.NodeCount; id++ {
-		if id == data.SourceNode {
+	for id := 0; id < data.JumlahNode; id++ {
+		if id == data.SumberNode {
 			continue
 		}
 
-		path := dijkstra.ReconstructPath(prev, data.SourceNode, id)
+		path := dijkstra.ReconstructPath(prev, data.SumberNode, id)
 		pathNames := formatPath(g, path)
 
 		fmt.Printf("%-25s %-15s %s\n", g.NodeName(id), fmt.Sprintf("%d menit", dist[id]), pathNames)

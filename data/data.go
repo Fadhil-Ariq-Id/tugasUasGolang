@@ -8,11 +8,11 @@ import (
 // Node ID 0..11 (kontigu).
 
 const (
-	SourceNode = 0
-	NodeCount  = 12
+	SumberNode = 0
+	JumlahNode = 12
 )
 
-func BuildGraphFromDoc() *graph.Graph {
+func DataSample() *graph.Graph {
 	g := graph.NewGraph()
 
 	// Node data (hal. 11)
